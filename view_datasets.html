@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<h2>Your Uploaded Datasets</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Uploaded At</th>
+            <th>Download</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for dataset in datasets %}
+        <tr>
+            <td>{% for dataset in datasets %}
+                <p>{{ dataset.name }}</p>
+                <a href="{% url 'analyze_dataset' dataset.id %}">Analyze</a>
+            {% endfor %}
+            </td>
+            <td>{{ dataset.uploaded_at }}</td>
+            <td><a href="{{ dataset.file.url }}" download>Download</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

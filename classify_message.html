@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+  <h2>Classify a Message</h2>
+  <form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Classify</button>
+  </form>
+
+  {% if result %}
+    <h3>Classification Result:</h3>
+    <p><strong>Message: </strong>{{ result.message }}</p>
+    <p><strong>Classification: </strong>{{ result.label }}</p>
+
+    <a href="{% url 'home' %}">Back to Home</a>
+  {% endif %}
+{% endblock %}

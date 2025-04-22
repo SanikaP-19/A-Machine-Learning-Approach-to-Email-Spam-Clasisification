@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<h2>Analyze Dataset: {{ dataset.name }}</h2>
+<a href="{% url 'view_datasets' %}">← Back to Datasets</a>
+<a href="{% url 'analysis_history' %}">View History</a>
+
+<form method="POST">
+    {% csrf_token %}
+    <label for="algorithm">Choose an Algorithm:</label>
+    <select name="algorithm" required>
+        <option value="Linear Regression">Linear Regression</option>
+        <option value="SVM">Support Vector Machine (SVM)</option>
+        <option value="KNN">K-Nearest Neighbors (KNN)</option>
+        <option value="Naive Bayes">Naive Bayes</option>
+    </select>
+    <button type="submit">Analyze</button>
+</form>
+
+{% if result %}
+    <h3>Results:</h3>
+    <p><strong>Precision:</strong> {{ result.precision }}</p>
+    <p><strong>Recall:</strong> {{ result.recall }}</p>
+    <p><strong>F1-Score:</strong> {{ result.f1_score }}</p>
+    <h3>Confusion Matrix:</h3>
+    {% load static %}
+    <img src="/{{result.confusion_matrix_path}}" alt="Confusion Matrix" style="width: 100%; max-width: 600px;">
+
+{% endif %}
+
+{% for message in messages %}
+    <p>{{ message }}</p>
+{% endfor %}
+{% endblock %}

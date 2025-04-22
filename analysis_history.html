@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<h2>Your Analysis History</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Dataset</th>
+            <th>Algorithm</th>
+            <th>Precision</th>
+            <th>Recall</th>
+            <th>F1-Score</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for dataset in datasets %}
+            {% for history in dataset.analysis_history %}
+            <tr>
+                <td>{{ dataset.name }}</td>
+                <td>{{ history.algorithm }}</td>
+                <td>{{ history.precision }}</td>
+                <td>{{ history.recall }}</td>
+                <td>{{ history.f1_score }}</td>
+                <td>{{ history.date }}</td>
+            </tr>
+            {% endfor %}
+        {% endfor %}
+    </tbody>
+</table>
+<a href="{% url 'view_datasets' %}">Back to My Datasets</a>
+
+{% endblock %}
